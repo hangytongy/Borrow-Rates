@@ -35,6 +35,8 @@ def main():
 
     for file in files:
         print(file)
-        
-        send_photo_telegram(os.path.join(chart_file,file), "Borrow Rate CEX & Dex")
+        if 'USDT' in file:
+            send_photo_telegram(os.path.join(chart_file,file), "Borrow Rate CEX & Dex USDT")
+        else:
+            send_photo_telegram(os.path.join(chart_file,file), "Borrow Rate CEX & Dex USDC")
 
