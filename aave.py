@@ -85,7 +85,7 @@ def aave_query(asset):
 
     # Send the POST request with the query and variables
     response = requests.post(url, json={'query': query, 'variables': variables})
-
+    print(response.status_code)
 
     return response.json()
 
@@ -105,6 +105,8 @@ def data_xform(data,asset):
     df.index = df.time
     df.drop(columns = ['timestamp','time'], inplace = True)
     df['asset'] = asset
+
+    print(df.head(1))
     
     return df
 

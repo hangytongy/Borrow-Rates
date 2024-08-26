@@ -28,6 +28,7 @@ def binance(directory):
     }
 
     response_USDT = requests.get(url, params = params_USDT)
+    print(response_USDT.status_code)
 
     df_USDT = pd.DataFrame(response_USDT.json()['data'])
 
@@ -45,6 +46,7 @@ def binance(directory):
         'endTime' : current_time
     }
     response_USDC = requests.get(url, params = params_USDC)
+    print(response_USDC.status_code)
 
     df_USDC = pd.DataFrame(response_USDC.json()['data'])
 
