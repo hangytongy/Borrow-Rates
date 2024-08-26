@@ -13,7 +13,7 @@ from binance.error import ParameterRequiredError
 from binance.spot import Spot as Client
 from urllib.parse import urlencode
 
-import binance
+import binance_
 import bybit
 import aave
 import plotting
@@ -25,7 +25,7 @@ def main():
     now = datetime.now().strftime("%Y-%m-%d")
     print(f"query date: {now}")
     print("--binance--")
-    binance_directory = binance.binance(directory)
+    binance_directory = binance_.binance(directory)
     print("--bybit--")
     bybit_directory = bybit.bybit(directory) # need keys in bybit code
     print("--aave--")
