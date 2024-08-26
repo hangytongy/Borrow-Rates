@@ -1,7 +1,8 @@
 # Borrow-Rates
 
 ```
-apt=get update
+# Install dependencies
+apt-get update
 apt install python3 python3-venv
 ```
 
