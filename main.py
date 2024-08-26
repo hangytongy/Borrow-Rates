@@ -9,7 +9,9 @@ import hmac
 import uuid
 import matplotlib.pyplot as plt
 from telegram_push import send_photo_telegram
-
+from binance.error import ParameterRequiredError
+from binance.spot import Spot as Client
+from urllib.parse import urlencode
 
 import binance
 import bybit

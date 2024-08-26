@@ -8,29 +8,42 @@ import hashlib
 import hmac
 import uuid
 import matplotlib.pyplot as plt
+from binance.error import ParameterRequiredError
+from binance.spot import Spot as Client
+from urllib.parse import urlencode
 
 def binance(directory):
     
+    key = ""
+    secret = ""
+    
+    def test_margin_interest_rate_history(params):
+        """Tests the API endpoint to query margin interest rate history"""
+
+        client = Client(key, secret)
+        response = client.margin_interest_rate_history(**params)
+        return response
+
     current_time = datetime.now()
     date_30_days_ago = current_time - timedelta(days=30)
 
     current_time = int(current_time.timestamp()*1000)
     date_30_days_ago = int(date_30_days_ago.timestamp()*1000)
 
-    url = "https://www.binance.com/bapi/margin/v1/public/margin/vip/spec/history-interest-rate"
-
-    params_USDT = {
+    params = {
         'asset' : 'USDT',
-        'vipLevel' : 0,
         'size' : 90,
         'startTime' : date_30_days_ago,
-        'endTime' : current_time
+        'endTime' : current_time,
+        'recvWindow': 20000,
+        "timestamp": current_time
     }
 
-    response_USDT = requests.get(url, params = params_USDT)
-    print(response_USDT.status_code)
 
-    df_USDT = pd.DataFrame(response_USDT.json()['data'])
+    response_USDT = test_margin_interest_rate_history(params)
+
+    df_USDT = pd.DataFrame(response_USDT)
+    print(df_USDT.head(1))
 
     df_USDT['date'] = df_USDT['timestamp'].apply(lambda x : datetime.fromtimestamp(int(x)/1000).strftime("%Y-%m-%d"))
 
@@ -38,17 +51,18 @@ def binance(directory):
 
     df_USDT = df_USDT.drop(columns = ['vipLevel','dailyInterestRate','timestamp'])
     
-    params_USDC = {
+    params = {
         'asset' : 'USDC',
-        'vipLevel' : 0,
         'size' : 90,
         'startTime' : date_30_days_ago,
-        'endTime' : current_time
+        'endTime' : current_time,
+        'recvWindow': 20000,
+        "timestamp": current_time
     }
-    response_USDC = requests.get(url, params = params_USDC)
-    print(response_USDC.status_code)
+    response_USDC = test_margin_interest_rate_history(params)
 
-    df_USDC = pd.DataFrame(response_USDC.json()['data'])
+    df_USDC = pd.DataFrame(response_USDC)
+    print(df_USDC.head(1))
 
     df_USDC['date'] = df_USDC['timestamp'].apply(lambda x : datetime.fromtimestamp(int(x)/1000).strftime("%Y-%m-%d"))
 
