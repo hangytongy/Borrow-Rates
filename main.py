@@ -17,6 +17,7 @@ import binance_
 import bybit
 import aave
 import plotting
+import recurring_data
 
 def main():
     if not os.path.exists("./data"):
@@ -30,6 +31,8 @@ def main():
     bybit_directory = bybit.bybit(directory) # need keys in bybit code
     print("--aave--")
     aave_directory = aave.aave(directory)
+
+    recurring_data.main(binance_directory, bybit_directory, aave_directory)
         
     chart_file = plotting.plotting(binance_directory, bybit_directory, aave_directory)
 
