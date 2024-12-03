@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "borrow rates",
+      "script": "start.sh",
+      "cron_restart": "0 */3 * * *",
+      "autorestart": false,
+    }]
+}
