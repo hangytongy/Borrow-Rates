@@ -22,7 +22,7 @@ import recurring_data
 def main():
     if not os.path.exists("./data"):
         os.makedirs("./data")
-    directory = os.getcwd() + "\\data" # in linux put "/data"
+    directory = os.getcwd() + "/data" # in linux put "/data"
     now = datetime.now().strftime("%Y-%m-%d")
     print(f"query date: {now}")
     print("--binance--")
