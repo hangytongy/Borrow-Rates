@@ -9,7 +9,7 @@ import hmac
 import uuid
 import matplotlib.pyplot as plt
 
-def plotting(binance_directory, bybit_directory, aave_directory):
+def plotting(binance_directory, bybit_directory, aave_directory, kamino_directory):
     #Binance
     nance = pd.read_csv(binance_directory)
     nance.index = pd.to_datetime(nance['date'])
@@ -34,12 +34,19 @@ def plotting(binance_directory, bybit_directory, aave_directory):
     aave = aave.drop(columns = ['date'])
     aave['asset'] = aave['asset'].apply(lambda x: x+"-aave")
 
-    #All dex
-    dex = pd.concat([aave])
-    dex_USDT = dex[dex['asset'].isin(['USDT-aave'])]
-    dex_USDC = dex[dex['asset'].isin(['USDC-aave'])]
+    #kamino
+    kamino = pd.read_csv(kamino_directory)
+    kamino = kamino.rename(columns = {'time':'date'})
+    kamino.index = pd.to_datetime(kamino['date'])
+    kamino = kamino.drop(columns = ['date'])
+    kamino['asset'] = kamino['asset'].apply(lambda x : x+"-kamino")
 
-    dex_palette = {'USDT-aave': 'green', 'USDC-aave' : 'green'}
+    #All dex
+    dex = pd.concat([aave,kamino])
+    dex_USDT = dex[dex['asset'].isin(['USDT-aave','USDT-kamino'])]
+    dex_USDC = dex[dex['asset'].isin(['USDC-aave','USDC-kamino'])]
+
+    dex_palette = {'USDT-aave': 'green', 'USDC-aave' : 'green', 'USDT-kamino' : 'black', 'USDC-kamino' : 'black'}
     chart_file = os.path.join(os.getcwd(),"charts")
     if not os.path.exists(chart_file):
         os.makedirs(chart_file)

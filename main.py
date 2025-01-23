@@ -18,6 +18,7 @@ import bybit
 import aave
 import plotting
 import recurring_data
+import kamino
 
 def main():
     if not os.path.exists("./data"):
@@ -31,10 +32,12 @@ def main():
     bybit_directory = bybit.bybit(directory) # need keys in bybit code
     print("--aave--")
     aave_directory = aave.aave(directory)
+    print("--kamino--")
+    kamino_directory = kamino.kamino(directory)
 
     recurring_data.main(binance_directory, bybit_directory, aave_directory)
         
-    chart_file = plotting.plotting(binance_directory, bybit_directory, aave_directory)
+    chart_file = plotting.plotting(binance_directory, bybit_directory, aave_directory,kamino_directory)
 
     files = [f for f in os.listdir(chart_file) if os.path.isfile(os.path.join(chart_file, f))]
 
